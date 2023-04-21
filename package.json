@@ -1,0 +1,11 @@
+{
+  "name": "language-tintin",
+  "main": "./lib/language-tintin",
+  "version": "0.46.0",
+  "description": "Syntax highlighter for the Tintin templating engine used in BowPHP",
+  "repository": "https://github.com/bowphp/atom-language-tintin",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  }
+}

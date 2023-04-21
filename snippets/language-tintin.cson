@@ -1,0 +1,373 @@
+'.text.html.php.blade':
+  # Common snippets
+  '{## comment ##}':
+    'description': 'Tintin comment.'
+    'prefix': 'com'
+    'body': '{## ${1:comment} ##}$0'
+  '{{ $message }}':
+    'description': 'Evaluates code and escapes the resulting string.'
+    'prefix': 'echo'
+    'body': '{{ ${1:$${2:message}} }}$0'
+  '{{{ $message }}}':
+    'description': 'Evaluates code and escapes the resulting string using e() helper.'
+    'prefix': 'echoh'
+    'body': '{{{ ${1:$${2:message}} }}}$0'
+  '{{{ $message }}}':
+    'description': 'Evaluates code without escaping the resulting string.'
+    'prefix': 'raw'
+    'body': '{{{ ${1:$${2:message}} }}}$0'
+  '<x-component />':
+    'description': 'Generic component tag'
+    'prefix': 'x'
+    'body': '<x-${1:component}${2: ${3:attribute}="${4:value}"} />$0'
+  '<x-component> … </x-component>':
+    'description': 'Generic component tag with slot'
+    'prefix': 'xx'
+    'body': """
+        <x-${1:component}${2: ${3:attribute}="${4:value}"}>${5:
+        \t$0
+        }</x-${1:component}>"""
+  # Snippets without % in prefix
+  '%csrf':
+    'description': 'Includes a CSRF field for use in forms.'
+    'prefix': 'csrf'
+    'body': '%csrf$0'
+  '%else':
+    'description': 'Control structure for use with if statements.'
+    'prefix': 'else'
+    'body': '%else$0'
+  '%append':
+    'description': 'Appends defined section to an existing one of the same name.'
+    'prefix': 'append'
+    'body': '%append$0'
+  '%overwrite':
+    'description': 'Overwrites a defined section.'
+    'prefix': 'overwrite'
+    'body': '%overwrite$0'
+  '%show':
+    'description': 'Shows and yields immediately a defined section.'
+    'prefix': 'show'
+    'body': '%show$0'
+  '%stop':
+    'description': 'Alternative syntax for %endsection.'
+    'prefix': 'stop'
+    'body': '%stop$0'
+  '%parent':
+    'description': 'Appends content a section instead of overwriting.'
+    'prefix': 'parent'
+    'body': '%parent$0'
+  '%elseif (…)':
+    'description': 'Elseif branch used in if statements.'
+    'prefix': 'elseif'
+    'body': '%elseif (${1:$${2:condition}})$0'
+  '%foreach (…) … %endforeach':
+    'description': 'Foreach loop.'
+    'prefix': 'foreach'
+    'body': '''
+             %foreach (${1:$${2:iterable}} as ${3:$${4:key}}${5: => ${6:$${7:value}}})
+             \t$0
+             %endforeach
+             '''
+  '%if (…) … %else … %endif':
+    'description': 'If-else statement.'
+    'prefix': 'ifelse'
+    'body': '''
+              %if (${1:$${2:condition}})
+              \t$3
+              %else
+              \t$0
+              %endif
+              '''
+  '%if (…) … %endif':
+    'description': 'If statement.'
+    'prefix': 'if'
+    'body': '''
+              %if (${1:$${2:condition}})
+              \t$0
+              %endif
+              '''
+  "%choice('language.line', 1)":
+    'description': 'Displays a pluralized localized string.'
+    'prefix': 'choice'
+    'body': "%choice('${1:category.line}', ${2:1})$0"
+  "%each('view', $data, 'iterator', 'empty')":
+    'description': 'Iterates over a collection, displaying contents of a view for each element.'
+    'prefix': 'each'
+    'body': "%each('${1:view}', ${2:$${3:iterable}}, '${4:value}', '${5:empty}')$0"
+  "%extends('view')":
+    'description': 'Extends a layout.'
+    'prefix': 'extends'
+    'body': "%extends('${1:view}')$0"
+  '%for …':
+    'description': 'For loop.'
+    'prefix': 'for'
+    'body': '''
+              %for ($${1:i}=${2:0}; $${1:i} < ${3:10}; $${1:i}++)
+              \t$0
+              %endfor
+              '''
+  '%loop (…) … %empty … %endloop':
+    'description': 'Executes a foreach loop.'
+    'prefix': 'loop'
+    'body': '''
+              %loop ($${1:variable} as $${2:key}${3: => $${4:value}})
+              \t$5
+              %endloop
+              '''
+  "%include('view')":
+    'description': 'Includes a sub-view.'
+    'prefix': 'include'
+    'body': "%include('${1:view}')$0"
+  "%lang('category.line')":
+    'description': 'Displays a localized string.'
+    'prefix': 'lang'
+    'body': "%lang('${1:category.line}')$0"
+  "%black('name') … %endblack":
+    'description': 'Defines a black of content.'
+    'prefix': 'sec'
+    'body': '''
+              %black('${1:name}')
+              \t$0
+              %${2:endblack}
+              '''
+  '%unless (…) … %endunless':
+    'description': 'Shorthand for if-not statement.'
+    'prefix': 'unless'
+    'body': '''
+              %unless (${1:$${2:condition}})
+              \t$0
+              %endunless
+              '''
+  '%while …':
+    'description': 'While loop.'
+    'prefix': 'while'
+    'body': '''
+              %while (${1:$${2:condition}})
+              \t$0
+              %endwhile
+              '''
+  "%inject('block')":
+    'description': 'Displays contents of a given block.'
+    'prefix': 'inject'
+    'body': "%inject('${1:block}')$0"
+  '%php …':
+    'description': 'Embeds PHP code.'
+    'prefix': 'php'
+    'body': '''
+              %php
+              \t$0
+              %endphp
+              '''
+  '%isset($var)':
+    'description': 'Determines whether a variable is considered to be empty using PHP isset() function.'
+    'prefix': 'isset'
+    'body': '''
+              %isset(${1:$var})
+              \t$0
+              %endisset
+              '''
+  '%verbatim':
+    'description': 'Protects text from being processed as Tintin syntax.'
+    'prefix': 'verbatim'
+    'body': '''
+              %verbatim
+              \t$0
+              %endverbatim
+              '''
+  '%empty':
+    'description': 'Determines whether a variable is considered to be empty using PHP empty() function.'
+    'prefix': 'empty'
+    'body': '''
+              %empty (${1:$var})
+              \t$0
+              %endempty
+              '''
+  '%continue':
+    'description': 'Continue statement used in loops.'
+    'prefix': 'continue'
+    'body': '%continue${1:(${2:$${3:condition}})}$0'
+  '%stop':
+    'description': 'Break statement used in switches and loops.'
+    'prefix': 'break'
+    'body': '%break${1:(${2:$${3:condition}})}$0'
+  '%includeif':
+    'description': 'Includes a view if present.'
+    'prefix': 'includeif'
+    'body': "%includeif('${1:view}', ${2:$${3:data}})$0"
+  '%service':
+    'description': 'Retrieves a service from the BowPHP service container.'
+    'prefix': 'inject'
+    'body': "%service('${1:var}', ${2:${3:SomeClass}::class})$0"
+  '%auth':
+    'description': 'Determines whether user has authenticated.'
+    'prefix': 'auth'
+    'body': '''
+              %auth${1: ('${2:admin}')}
+              \t$0
+              %endauth
+              '''
+  '%guest':
+    'description': 'Determines whether user is guest.'
+    'prefix': 'guest'
+    'body': '''
+              %guest
+              \t$0
+              %endguest
+              '''
+  # The following snippets are identical to the ones above with the exception that the prefix includes the %-symbol.
+  # This solves the edge case where for instance typing %if<TAB> will result in expanding to %%if... but should
+  # resolve to %if... instead.
+  #
+  # In order to not overwrite the completions above, all of them have a space appended to the key of the completion.
+  #
+  # We shouldn't be doing this once https://github.com/atom/snippets/issues/107 is solved.
+  '%csrf ':
+    'description': 'Includes a CSRF field for use in forms.'
+    'prefix': '%csrf'
+    'body': '%csrf$0'
+  '%else ':
+    'description': 'Control structure for use with if statements.'
+    'prefix': '%else'
+    'body': '%else$0'
+  '%stop ':
+    'description': 'Alternative syntax for %endsection.'
+    'prefix': '%stop'
+    'body': '%stop$0'
+  '%elseif (…) ':
+    'description': 'Elseif branch used in if statements.'
+    'prefix': '%elseif'
+    'body': '%elseif (${1:$${2:condition}})$0'
+  '%loop (…) … %endloop ':
+    'description': 'Foreach loop.'
+    'prefix': '%loop'
+    'body': '''
+             %loop (${1:$${2:iterable}} as ${3:$${4:key}}${5: => ${6:$${7:value}}})
+             \t$0
+             %endloop
+             '''
+  '%if (…) … %else … %endif ':
+    'description': 'If-else statement.'
+    'prefix': '%ifelse'
+    'body': '''
+              %if (${1:$${2:condition}})
+              \t$3
+              %else
+              \t$0
+              %endif
+              '''
+  '%if (…) … %endif ':
+    'description': 'If statement.'
+    'prefix': '%if'
+    'body': '''
+              %if (${1:$${2:condition}})
+              \t$0
+              %endif
+              '''
+  "%extends('view') ":
+    'description': 'Extends a layout.'
+    'prefix': '%extends'
+    'body': "%extends('${1:view}')$0"
+  '%for … ':
+    'description': 'For loop.'
+    'prefix': '%for'
+    'body': '''
+              %for ($${1:i}=${2:0}; $${1:i} < ${3:10}; $${1:i}++)
+              \t$0
+              %endfor
+              '''
+  "%include('view') ":
+    'description': 'Includes a sub-view.'
+    'prefix': '%include'
+    'body': "%include('${1:view}')$0"
+  "%lang('category.line') ":
+    'description': 'Displays a localized string.'
+    'prefix': '%lang'
+    'body': "%lang('${1:category.line}')$0"
+  "%block('name') … %endblock ":
+    'description': 'Defines a block of content.'
+    'prefix': '%sec'
+    'body': '''
+              %block('${1:name}')
+              \t$0
+              %${2:endblock}
+              '''
+  '%unless (…) … %endunless ':
+    'description': 'Shorthand for if-not statement.'
+    'prefix': '%unless'
+    'body': '''
+              %unless (${1:$${2:condition}})
+              \t$0
+              %endunless
+              '''
+  '%while … ':
+    'description': 'While loop.'
+    'prefix': '%while'
+    'body': '''
+              %while (${1:$${2:condition}})
+              \t$0
+              %endwhile
+              '''
+  '%php … ':
+    'description': 'Embeds PHP code.'
+    'prefix': '%php'
+    'body': '''
+              %php
+              \t$0
+              %endphp
+              '''
+  '%isset($var) ':
+    'description': 'Determines whether a variable is considered to be empty using PHP isset() function.'
+    'prefix': '%isset'
+    'body': '''
+              %isset(${1:$var})
+              \t$0
+              %endisset
+              '''
+  '%verbatim ':
+    'description': 'Protects text from being processed as Tintin syntax.'
+    'prefix': '%verbatim'
+    'body': '''
+              %verbatim
+              \t$0
+              %endverbatim
+              '''
+  '%empty ':
+    'description': 'Determines whether a variable is considered to be empty using PHP empty() function.'
+    'prefix': '%empty'
+    'body': '''
+              %empty (${1:$var})
+              \t$0
+              %endempty
+              '''
+  '%continue ':
+    'description': 'Continue statement used in loops.'
+    'prefix': '%continue'
+    'body': '%continue${1:(${2:$${3:condition}})}$0'
+  '%stop ':
+    'description': 'Break statement used in switches and loops.'
+    'prefix': '%break'
+    'body': '%break${1:(${2:$${3:condition}})}$0'
+  '%includeif ':
+    'description': 'Includes a view if present.'
+    'prefix': '%includeif'
+    'body': "%includeif('${1:view}', ${2:$${3:data}})$0"
+  '%inject ':
+    'description': 'Retrieves a service from the BowPHP service container.'
+    'prefix': '%inject'
+    'body': "%inject('${1:var}', ${2:${3:SomeClass}::class})$0"
+  '%auth ':
+    'description': 'Determines whether user has authenticated.'
+    'prefix': '%auth'
+    'body': '''
+              %auth${1: ('${2:admin}')}
+              \t$0
+              %endauth
+              '''
+  '%guest ':
+    'description': 'Determines whether user is guest.'
+    'prefix': '%guest'
+    'body': '''
+              %guest
+              \t$0
+              %endguest
+              '''

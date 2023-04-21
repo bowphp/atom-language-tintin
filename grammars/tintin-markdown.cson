@@ -1,0 +1,16 @@
+'scopeName': 'source.gfm.tintin'
+'name': 'Tintin (Markdown)'
+'fileTypes': [
+  'tintin.md'
+]
+'patterns': [
+  {
+    'include': 'text.html.php.tintin#tintin'
+  }
+  {
+    'include': 'text.html.basic'
+  }
+  {
+    'include': 'source.gfm'
+  }
+]
